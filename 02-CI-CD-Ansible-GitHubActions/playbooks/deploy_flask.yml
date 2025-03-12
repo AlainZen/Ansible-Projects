@@ -23,8 +23,8 @@
 
     - name: Installer les dépendances Flask
       pip:
-        requirements: /var/www/flask_app/01-Deploy-Flask-Ansible/flask_app/requirements.txt
+        requirements: /var/www/flask_app/01-Flask-Deployment-Ansible/flask_app/requirements.txt
 
     - name: Lancer l'application Flask
       shell: |
-        nohup python3 /var/www/flask_app/01-Deploy-Flask-Ansible/flask_app/app.py &
+        nohup python3 /var/www/flask_app/01-Flask-Deployment-Ansible/flask_app/app.py &

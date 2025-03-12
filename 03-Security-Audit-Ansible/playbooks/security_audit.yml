@@ -39,4 +39,4 @@
 
           Statut du pare-feu:
           {{ ufw_status.stdout }}
-        dest: ../reports/security_audit_report.txt
+        dest: ./03-Security-Audit-Ansible/reports/security_audit_report.txt

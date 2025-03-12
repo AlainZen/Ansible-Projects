@@ -1,0 +1,42 @@
+---
+- name: Audit de Sécurité Système
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Vérifier les paquets obsolètes
+      shell: apt list --upgradable
+      register: outdated_packages
+
+    - name: Afficher les paquets obsolètes
+      debug:
+        var: outdated_packages.stdout_lines
+
+    - name: Lister les utilisateurs avec accès sudo
+      shell: "getent group sudo"
+      register: sudo_users
+
+    - name: Afficher les utilisateurs sudo
+      debug:
+        var: sudo_users.stdout_lines
+
+    - name: Vérifier le statut du pare-feu (UFW)
+      shell: ufw status
+      register: ufw_status
+
+    - name: Afficher le statut du pare-feu
+      debug:
+        var: ufw_status.stdout_lines
+
+    - name: Sauvegarder le rapport d'audit
+      copy:
+        content: |
+          Paquets obsolètes:
+          {{ outdated_packages.stdout }}
+
+          Utilisateurs sudo:
+          {{ sudo_users.stdout }}
+
+          Statut du pare-feu:
+          {{ ufw_status.stdout }}
+        dest: ../reports/security_audit_report.txt
